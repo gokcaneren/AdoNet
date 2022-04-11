@@ -17,11 +17,29 @@ namespace AdoNetDemo
             InitializeComponent();
         }
 
+        ProductDal _productDal = new ProductDal();
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            ProductDal productDal = new ProductDal();
+            LoadData();
+        }
 
-            dgwProducts.DataSource = productDal.GetAll();
+        private void LoadData()
+        {
+            dgwProducts.DataSource = _productDal.GetAll();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            _productDal.Add(new Product
+            {
+                Name=tbxName.Text,
+                UnitPrice=Convert.ToDecimal(tbxUnitPrice.Text),
+                StockAmount=Convert.ToInt32(tbxStockAmount.Text)
+            });
+            LoadData();
+            MessageBox.Show("Product added!");
         }
     }
 }
